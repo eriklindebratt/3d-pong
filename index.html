@@ -29,7 +29,10 @@
       <a href="#start" onclick="init(); return false">Click to start</a>
     </div>
     <div class="js-loading-indicator loading-indicator" style="display: none">Loading...</div>
+
+    <script src="//js.leapmotion.com/0.3.0/leap.js"></script>
     <script src="js/main.js"></script>
+
     <script>
       var onKeyDownInit = function(e) {
         if (e.keyCode === 32) {
@@ -38,6 +41,37 @@
         }
       };
       document.addEventListener('keydown', onKeyDownInit);
+
+      var controller = new Leap.Controller();
+      console.log(controller);
+
+      controller.on('connect', function() {
+        console.log("Successfully connected.");
+      });
+
+      controller.on('deviceConnected', function() {
+        console.log("A Leap device has been connected.");
+      });
+
+      controller.on('deviceDisconnected', function() {
+        console.log("A Leap device has been disconnected.");
+      });
+
+      controller.on('frame', function(frame) {
+        //console.log(frame);
+        if (frame.hands.length) {
+          if (frame.fingers.length) {
+            //console.log("hand OPEN");
+          } else {
+            //console.log("hand CLOSED");
+            window.hand = frame.hands[0];//[0].stabilizedPalmPosition;
+            //console.log(hand.stabilizedPalmPosition);
+            window.moveHandleToLeapPosition && window.moveHandleToLeapPosition(hand.stabilizedPalmPosition);
+          }
+        }
+      });
+      controller.connect();
+    </script>
     </script>
   </body>
 </html>

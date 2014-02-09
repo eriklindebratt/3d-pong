@@ -256,10 +256,10 @@ var init3D = function() {
     //camera.position.y = constants.SCENE_SIZE.width/2 - mousePos.y;
     //camera.position.z += factor.y/80;//= cameraOpts.position.z - 400*factor.x;
 
-    camera.rotation.x += 0.01;
-    camera.rotation.x += factor.y/50;
-    camera.rotation.y += factor.x/50;
-    camera.rotation.y = 0.3 * factor.x;
+    //camera.rotation.x += 0.01;
+    //camera.rotation.x += factor.y/50;
+    //camera.rotation.y += factor.x/50;
+    //camera.rotation.y = 0.3 * factor.x;
 
     renderer.render(scene, camera);
   };
@@ -300,14 +300,27 @@ var init3D = function() {
         break;
       case 37:  // left arrow
         e.preventDefault();
-        playerHandle.position.x -= 50;
+        //playerHandle.position.x -= 50;
         break;
       case 39:  // right arrow
         e.preventDefault();
-        playerHandle.position.x += 50;
+        //playerHandle.position.x += 50;
         break;
     }
   }, false);
+
+  /**
+   * @param {vector} position
+   */
+  window.moveHandleToLeapPosition = function(position) {
+    if (!position) {
+      return;
+    }
+
+    playerHandle.position.x = position[0] * 8;
+    //playerHandle.position.y = position[1];
+    //playerHandle.position.z = position[2];
+  };
 
   //document.addEventListener("resize", function(e) {
     //constants.SCENE_SIZE.width = window.innerWidth;
